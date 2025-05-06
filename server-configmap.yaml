@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-server-configmap
+data:
+  database_url: "mongodb://kube-server-mongo:27017/kube-server" # this is the url of the database. this should match the url in the server code
+  database: "Eztaxi"

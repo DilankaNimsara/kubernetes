@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-server-service
+spec:
+  selector:
+    app: kube-server
+  type: LoadBalancer # type of service. LoadBalancer is used to expose the service to the outside world
+  ports:
+    - port: 8050 # port of the service. this is the port that will be exposed to the outside world
+      targetPort: 8080 # container port of the deployment. this should match the containerPort in the deployment
+      protocol: TCP
+      nodePort: 30001 # this is the port that will be used to access the service from outside the cluster. nodePort range (30000-32767)
+
+# assign public address to minikube
+# minikube service kube-server-service

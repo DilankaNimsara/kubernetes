@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-server-deployment
+  labels:
+    app: kube-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kube-server
+  template:
+    metadata:
+      labels:
+        app: kube-server
+    spec:
+      containers:
+        - name: kube-server
+          image: dilankanimsara/kube-server:v1.03
+          ports:
+            - containerPort: 8080 # container port of the deployment. this should match the targetPort in the service
+          env:
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: kube-server-configmap
+                  key: database_url # this should match the key in the configmap
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: kube-server-configmap
+                  key: database # this should match the key in the configmap
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: kube-server-secret
+                  key: username # this should match the key in the secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password # this should match the key in the secret
+                  name: kube-server-secret
+
+# Secrets and configMaps need to be created before the deployment
