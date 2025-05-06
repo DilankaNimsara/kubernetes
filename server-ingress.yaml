@@ -12,9 +12,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kube-server-service
+                name: kube-server-service # this should match the name of the service
                 port:
-                  number: 8050
+                  number: 8050 # this should match the port in the service
 
 # kubectl get ingress
 # add host entry to /etc/hosts
